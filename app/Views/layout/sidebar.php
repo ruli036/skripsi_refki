@@ -38,7 +38,7 @@
             <?php endif;?>
           <?php endif;?>
           <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
+                <a class="sidebar-link sidebar-title" href="<?=url_to('mahasiswa')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-user"></use>
                   </svg>
@@ -48,7 +48,7 @@
                 </a>
               </li>
               <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
+                <a class="sidebar-link sidebar-title" href="<?=url_to('perusahaan')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-file"></use>
                   </svg>

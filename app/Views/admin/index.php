@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group text-end" role="group">
-                                       
+
                                 </div>
                             </div>
 
@@ -78,8 +78,8 @@
                             </div>
                         </form>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Ganti Password
-                                        </button>
+                            Ganti Password
+                        </button>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                             <label class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" required placeholder="Password" id="password">
-                                <input type="hidden" class="form-control" value="<?=$user->id?>" disabled id="id">
+                                <input type="hidden" class="form-control" value="<?= $user->id ?>" disabled id="id">
                             </div>
                         </div>
                     </div>
@@ -122,11 +122,10 @@
         <?= $this->section('script') ?>
         <script src="<?= base_url() ?>cuba/assets/js/datepicker/date-picker/datepicker.js"></script>
         <script src="<?= base_url() ?>cuba/assets/js/datepicker/date-picker/datepicker.en.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
         <script src="<?= base_url('assets/js/upload.js') ?>"></script>
         <script type="text/javascript">
             function simpan() {
-                
+
                 const id = $("#id").val();
                 const password = $("#password").val();
                 if (password === '') {

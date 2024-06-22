@@ -5,7 +5,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-6">
-                <h3>Tes Dinas Aceh Jaya</h3>
+            <h3><?=env('TITLE','Default Title')?></h3>
             </div>
             <div class="col-6">
                 <ol class="breadcrumb">
@@ -15,7 +15,7 @@
                             </svg></a>
                     </li>
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">Profile</li>
+                    <li class="breadcrumb-item active">Add User</li>
                 </ol>
             </div>
         </div>
@@ -84,23 +84,7 @@
                                         <input type="text" class="form-control" required placeholder="Nama Lengkap" name="username" id="username">
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                    <div class="col-sm-9">
-                        <div class="form-check">
-                            <input class="form-check-input"  type="radio" name="jk" id="laki-laki" value="L" checked>
-                            <label class="form-check-label" for="laki-laki">
-                                Laki-laki
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" id="perempuan" value="P">
-                            <label class="form-check-label" for="perempuan">
-                                Perempuan
-                            </label>
-                        </div>
-                    </div>
-                </div> -->
+                                
                                 <div class="form-group row" style="padding-bottom: 15px;">
                                     <label class="col-sm-3 col-form-label">Password</label>
                                     <div class="col-sm-9">
