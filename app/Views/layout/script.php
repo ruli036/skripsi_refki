@@ -35,6 +35,4 @@
  <!-- login js-->
  <!-- Plugin used-->
  <!-- FCM js-->
- <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
- <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-messaging.js"></script>
  
