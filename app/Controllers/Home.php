@@ -86,7 +86,9 @@ class Home extends BaseController
         } else {
             $role = 'User';
         }
+        $users = new UserModel();
         $data = [
+            'datauser' => $users->findAll(),
             'user' => $user,
             'role' => $role,
         ];

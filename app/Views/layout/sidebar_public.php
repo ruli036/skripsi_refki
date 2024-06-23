@@ -25,7 +25,7 @@
           </li>
 
           <li class="sidebar-list">
-            <a class="sidebar-link sidebar-title" href="<?= url_to('lowongan') ?>">
+            <a class="sidebar-link sidebar-title" href="<?= url_to('lowonganpublic') ?>">
               <svg class="stroke-icon">
                 <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-file"></use>
               </svg>

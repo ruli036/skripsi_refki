@@ -84,7 +84,72 @@
                 </div>
             </div>
             <div class="col-xl-8">
+                <div class="col-xl-12 col-md-12 box-col-12">
+                    <div class="email-right-aside bookmark-tabcontent">
+                        <div class="card email-body radius-left">
+                            <div class="ps-0">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active show" id="pills-created" role="tabpanel" aria-labelledby="pills-created-tab">
+                                        <div class="card mb-0">
+                                            <div class="card-header d-flex">
+                                                <h5 class="mb-0">Users Admin</h5>
+                                                <div class="pull-right">
+                                                    <a type="button" class="btn btn-success btn-sm" href="<?= url_to('adduser') ?>">
+                                                        ADD USER
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <div class="taskadd">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
 
+                                                            <thead>
+                                                                <tr class="border-bottom-primary">
+                                                                    <th scope="col">No</th>
+                                                                    <th scope="col">Foto</th>
+                                                                    <th scope="col">Username</th>
+                                                                    <th scope="col">Email</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php if (empty($datauser)) : ?>
+                                                                    <tr>
+                                                                        <td colspan="8" class="text-center">
+                                                                            Data Kosong
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php else : ?>
+                                                                    <?php
+
+                                                                    foreach ($datauser as $key => $value) : ?>
+                                                                        <tr class="border-bottom-secondary">
+                                                                            <th scope="row"><?= ++$key ?></th>
+                                                                            <td>
+                                                                                <img class="img-50 rounded-3" alt="" src="<?= base_url('assets/files/foto/' . $value->photo) ?>" onerror="this.onerror=null;this.src='https://nse.alazharcairobna.sch.id/assets/img/boy.png';">
+                                                                            </td>
+                                                                            <td><?= $value->username ?></td>
+                                                                            <td><?= $value->email ?></td>
+                                                                        </tr>
+                                                                    <?php endforeach; ?>
+                                                                <?php endif; ?>
+                                                            </tbody>
+
+                                                        </table>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -23,7 +23,7 @@
               </svg><span>Profile</span>
             </a>
           </li>
-              <li class="sidebar-list">
+              <!-- <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-user"></use>
@@ -32,7 +32,7 @@
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#fill-social"></use>
                   </svg><span>Data User</span>
                 </a>
-              </li>
+              </li> -->
           <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title" href="<?=url_to('mahasiswa')?>">
                   <svg class="stroke-icon">
