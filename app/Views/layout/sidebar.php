@@ -23,8 +23,6 @@
               </svg><span>Profile</span>
             </a>
           </li>
-          <?php if(isset($role)):?>
-            <?php if($role == 'Admin'):?>
               <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
                   <svg class="stroke-icon">
@@ -35,8 +33,6 @@
                   </svg><span>Data User</span>
                 </a>
               </li>
-            <?php endif;?>
-          <?php endif;?>
           <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title" href="<?=url_to('mahasiswa')?>">
                   <svg class="stroke-icon">
@@ -58,7 +54,7 @@
                 </a>
               </li>
               <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
+                <a class="sidebar-link sidebar-title" href="<?=url_to('lowongan')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-social"></use>
                   </svg>
@@ -68,7 +64,7 @@
                 </a>
               </li>
               <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
+                <a class="sidebar-link sidebar-title" href="<?=url_to('jadwaltes')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#clock"></use>
                   </svg>
@@ -78,7 +74,7 @@
                 </a>
               </li>
               <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title" href="<?=url_to('user')?>">
+                <a class="sidebar-link sidebar-title" href="<?=url_to('informasi')?>">
                   <svg class="stroke-icon">
                     <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#notification"></use>
                   </svg>

@@ -53,7 +53,7 @@
         <div class="page-body-wrapper">
 
             <!-- Page Sidebar Start-->
-            <?= $this->include('layout/sidebar_admin') ?>
+            <?= $this->include('layout/sidebar') ?>
             <!-- Page Sidebar Ends-->
 
             <div class="page-body">

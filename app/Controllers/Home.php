@@ -293,4 +293,218 @@ class Home extends BaseController
         header('Content-Type: application/json');
         echo json_encode($arr);
     }
+    public function lowonganindex()
+    {       
+        
+        $user = $this->auth->user();
+        if($this->authorization->inGroup('admin', $user->id)){
+            $role = 'Admin';
+        }else{
+            $role = 'User';
+        }
+        $rekankerja = $this->db->query('select * from rekan_kerja where stts = "A" ')->getResult();
+        
+        $lowongan = $this->db->query('select a.*,
+        (select nama from rekan_kerja where id = a.id_rekan) as `perusahaan`, 
+        (select IFNULL(count(id),0) from jadwal_seleksi where id_lowongan = a.id) as `pendaftar`, 
+        (select alamat from rekan_kerja where id = a.id_rekan) as `alamat`
+        from lowongan a')->getResult();
+      
+        $data = [
+            'lowongan' => $lowongan,
+            'rekankerja' => $rekankerja,
+            'user' => $user,
+            'role' => $role,
+        ];
+        // var_dump($mahasiswa);
+        return view('lowongan/index',$data);      
+    }
+
+    public function addlowongan()
+    {       
+        try {
+            $data = $this->request->getPost();
+        
+            $this->db->table('lowongan')->insert($data);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+
+    public function deletelowongan()
+    {       
+        try {
+            $id = $this->request->getPost('id');        
+        
+            $this->db->table('lowongan')->delete(['id' => $id]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menghapus Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+    public function editlowongan()
+    {       
+        try {
+            $data = $this->request->getPost();
+            $id = $this->request->getPost('id');
+            unset($data['id']);
+        
+            $this->db->table('lowongan')->update($data,['id'=>$id]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Mengubah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+
+    public function jadwaltesindex()
+    {       
+        
+        $user = $this->auth->user();
+        if($this->authorization->inGroup('admin', $user->id)){
+            $role = 'Admin';
+        }else{
+            $role = 'User';
+        }
+        $siswa = $this->db->query('select a.* from siswas a')->getResult();
+        $lowongan = $this->db->query('select a.*,(select nama from rekan_kerja where id = a.id_rekan) as `perusahaan` from lowongan a where tgl_awal >= "'.date('Y-m-d').'" || tgl_akhir <= "'.date('Y-m-d').'"')->getResult();
+        
+        $jadwaltes = $this->db->query('select a.*,b.posisi,
+        (select nama from siswas where id = a.id_siswa) as `nama`, 
+        (select no_hp from siswas where id = a.id_siswa) as `no_hp`, 
+        (select nama from rekan_kerja where id = b.id_rekan) as `perusahaan`, 
+        (select alamat from rekan_kerja where id = b.id_rekan) as `lokasi`
+        from jadwal_seleksi a 
+        inner join lowongan b on a.id_lowongan = b.id')->getResult();
+      
+        $data = [
+            'lowongan' => $lowongan,
+            'siswa' => $siswa,
+            'jadwaltes' => $jadwaltes,
+            'user' => $user,
+            'role' => $role,
+        ];
+        // var_dump($mahasiswa);
+        return view('jadwaltes/index',$data);      
+    }
+
+    public function addjadwal()
+    {       
+        try {
+            $data = $this->request->getPost();
+        
+            $this->db->table('jadwal_seleksi')->insert($data);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+    public function deletejadwaltes()
+    {       
+        try {
+            $id = $this->request->getPost('id');        
+        
+            $this->db->table('jadwal_seleksi')->delete(['id' => $id]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menghapus Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+    public function editjadwaltes()
+    {       
+        try {
+            $data = $this->request->getPost();
+            $id = $this->request->getPost('id');
+            unset($data['id']);
+        
+            $this->db->table('jadwal_seleksi')->update($data,['id'=>$id]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Mengubah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+
+    public function informasiindex()
+    {       
+        
+        $user = $this->auth->user();
+        if($this->authorization->inGroup('admin', $user->id)){
+            $role = 'Admin';
+        }else{
+            $role = 'User';
+        }
+        $info = $this->db->query('select * from info order by created_at desc')->getResult();
+      
+        $data = [
+            'info' => $info,
+            'user' => $user,
+            'role' => $role,
+        ];
+        // var_dump($mahasiswa);
+        return view('informasi/index',$data);      
+    }
+
+    public function addinfo()
+    {       
+        try {
+            $desc = $this->request->getPost('desc');
+            $konten = htmlspecialchars($desc, ENT_QUOTES, 'UTF-8');
+            $this->db->table('info')->insert(['desc'=>$konten]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+    public function deleteinfo()
+    {       
+        try {
+            $id = $this->request->getPost('id');        
+        
+            $this->db->table('info')->delete(['id' => $id]);
+            
+            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menghapus Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
 }
+

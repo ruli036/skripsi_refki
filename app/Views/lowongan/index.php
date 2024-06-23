@@ -15,7 +15,7 @@
 							</svg></a>
 					</li>
 					<li class="breadcrumb-item">Home</li>
-					<li class="breadcrumb-item active">Perusahaan</li>
+					<li class="breadcrumb-item active">Lowongan</li>
 				</ol>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 			<div class="card">
 				<div class="row">
 					<div class="col-md-6">
-						<h4>PERUSAHAAN</h4>
+						<h4>LOWONGAN</h4>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group mb-0 me-0">
@@ -60,7 +60,7 @@
 							<img class="img-40 img-fluid m-r-20" src="<?= base_url('nubis/images/logo.png') ?>" alt="">
 							<div class="media-body">
 								<h6 class="f-w-600">
-									<a href="#">Data Relasi Perusahaan </a>
+									<a href="#">Data Lowongan Perusahaan </a>
 									<span class="pull-right">
 
 									</span>
@@ -71,25 +71,29 @@
 										<thead>
 											<tr class="border-bottom-primary">
 												<th scope="col">No</th>
-												<th scope="col">Nama</th>
-												<th scope="col">Tanggal Kerjasama </th>
-												<th scope="col">Alamat</th>
-												<th scope="col">Status</th>
+												<th scope="col">Perusahaan</th>
+												<th scope="col" width='15%'>Alamat </th>
+												<th scope="col">Posisi</th>
+												<th scope="col">Kuota</th>
+												<th scope="col">Pendaftar</th>
+												<th scope="col">Batas Pendaftaran</th>
 												<th scope="col">Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
 												<?php
 
-												foreach ($perusahaan as $key => $value) : ?>
+												foreach ($lowongan as $key => $value) : ?>
 													<tr class="border-bottom-secondary">
 														<th scope="row"><?= ++$key ?></th>
-														<td><?= $value->nama ?></td>
-														<td><?= $value->tgl_kerja_sama ?></td>
+														<td><?= $value->perusahaan ?></td>
 														<td><?= $value->alamat ?></td>
-														<td><?= $value->stts == 'A'?'AKTIF':'NON AKTIF' ?></td>
+														<td><?= $value->posisi ?></td>
+														<td><?= $value->kuota ?></td>
+														<td><?= $value->pendaftar ?></td>
+														<td><?= $value->tgl_awal ?> Sampai <?= $value->tgl_akhir ?></td>
 														<td>
-															<button type="button" class="btn btn-primary btn-sm" onclick="openModal('<?= $value->id ?>','<?= $value->nama ?>','<?= $value->tgl_kerja_sama ?>','<?= $value->alamat ?>','<?= $value->stts ?>')">
+															<button type="button" class="btn btn-primary btn-sm" onclick="openModal('<?= $value->id ?>','<?= $value->id_rekan ?>','<?= $value->posisi ?>','<?= $value->kuota ?>','<?= $value->tgl_awal ?>','<?= $value->tgl_akhir ?>')">
 																Edit
 															</button>
 															<button type="button" class="btn btn-danger btn-sm" onclick="deleted('<?= $value->id ?>')">
@@ -114,41 +118,45 @@
 	</div>
 </div>
 <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
+				
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" required placeholder="Nama Perusahaan" id="nama">
-					</div>
-				</div>
-				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Tanggal Kerja Sama</label>
-					<div class="col-sm-9">
-						<input type="date" class="form-control" required placeholder="Tanggal" id="tgl">
-					</div>
-				</div>
-				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Alamat</label>
-					<div class="col-sm-9">
-						<textarea name="" id="alamat" class="form-control"></textarea>
-						<!-- <input type="text" class="form-control" required placeholder="Alamat" id="alamat"> -->
-					</div>
-				</div>
-				<div class="form-group row" style="padding-bottom: 15px;">
-                    <label class="col-sm-3 col-form-label">Status</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="stts">
-                                <option value="A"> AKTIF</option>
-                                <option value="N"> NON AKTIF</option>
+                    <label class="col-sm-2 col-form-label">Perusahaan</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="id_rekan">
+                            <?php foreach ($rekankerja as $rk) : ?>
+                                <option value="<?= $rk->id ?>"> <?= $rk->nama ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
+				<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label">Posisi</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" required placeholder="Posisi" id="posisi">
+					</div>
+				</div>
+				<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label">Kuota</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" required placeholder="Kuota" id="kuota">
+					</div>
+				</div>
+				<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label">Batas Pendaftaran</label>
+					<div class="col-sm-5">
+						<input type="date" class="form-control" required placeholder="Tgl Awal" id="tgl_awal">
+					</div>
+					<div class="col-sm-5">
+						<input type="date" class="form-control" required placeholder="Tgl Akhir" id="tgl_akhir">
+					</div>
+				</div>
 				<input type="hidden" class="form-control" disabled id="id">
 
 			</div>
@@ -160,7 +168,7 @@
 	</div>
 </div>
 <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5" id="exampleModalLabel">Add Data</h1>
@@ -168,23 +176,37 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" required placeholder="Nama Perusahaan" id="nama2">
+                    <label class="col-sm-2 col-form-label">Perusahaan</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="id_rekan2">
+                            <?php foreach ($rekankerja as $rk) : ?>
+                                <option value="<?= $rk->id ?>"> <?= $rk->nama ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+				<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label">Posisi</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" required placeholder="Posisi" id="posisi2">
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Tanggal Kerja Sama</label>
-					<div class="col-sm-9">
-						<input type="date" class="form-control" required placeholder="Tanggal" id="tgl2">
+					<label class="col-sm-2 col-form-label">Kuota</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" required placeholder="Kuota" id="kuota2">
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Alamat</label>
-					<div class="col-sm-9">
-						<textarea name="" id="alamat2" class="form-control"></textarea>
+					<label class="col-sm-2 col-form-label">Batas Pendaftaran</label>
+					<div class="col-sm-5">
+						<input type="date" class="form-control" required placeholder="Tgl Awal" id="tgl_awal2">
+					</div>
+					<div class="col-sm-5">
+						<input type="date" class="form-control" required placeholder="Tgl Akhir" id="tgl_akhir2">
 					</div>
 				</div>
+				
 				<input type="hidden" class="form-control" disabled id="id2">
 
 			</div>
@@ -209,7 +231,7 @@
 <script src="<?= base_url('assets/js/upload.js') ?>"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	 $(document).ready(function() {
         $('#tabledata').DataTable({
             paging: true,
             searching: true,
@@ -219,12 +241,13 @@
             order: [[ 3, "desc" ]] // Order by the 4th column (Age) descending
         });
     });
-	function openModal(id, nama, tgl, alamat,stts) {
+	function openModal(id, idrekan, posisi, kuota, tglawal, tglakhir ) {
 		$("#id").val(id);
-		$("#nama").val(nama);
-		$("#tgl").val(tgl);
-		$("#alamat").val(alamat);
-		$("#stts").val(stts);
+		$("#id_rekan").val(idrekan);
+		$("#posisi").val(posisi);
+		$("#kuota").val(kuota);
+		$("#tgl_awal").val(tglawal);
+		$("#tgl_akhir").val(tglakhir);
 		var myModal = new bootstrap.Modal(document.getElementById('edit'), {
 			keyboard: true
 		});
@@ -233,21 +256,23 @@
 
 	function simpan() {
 		const id = $("#id").val();
-		const nama = $("#nama").val();
-		const tgl = $("#tgl").val();
-		const alamat = $("#alamat").val();
-		const stts = $("#stts").val();
-		if (nama === ''|| alamat === '' || tgl === '') {
+		const id_rekan = $("#id_rekan").val();
+		const posisi = $("#posisi").val();
+		const kuota = $("#kuota").val();
+		const tgl_awal = $("#tgl_awal").val();
+		const tgl_akhir = $("#tgl_akhir").val();
+		if (posisi === ''|| kuota === '' || tgl_awal === ''|| tgl_akhir === '') {
 			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
 		let formData = new FormData();
 		formData.append('id', id);
-		formData.append('nama', nama);
-		formData.append('tgl_kerja_sama', tgl);
-		formData.append('alamat', alamat);
-		formData.append('stts', stts);
+		formData.append('id_rekan', id_rekan);
+		formData.append('posisi', posisi);
+		formData.append('kuota', kuota);
+		formData.append('tgl_awal', tgl_awal);
+		formData.append('tgl_akhir', tgl_akhir);
 		$.ajax({
-			url: "<?= url_to('editrelasi') ?>",
+			url: "<?= url_to('editlowongan') ?>",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -267,7 +292,7 @@
 				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
-							location.href = "<?= site_url('admin/perusahaan') ?>";
+							location.href = "<?= site_url('admin/lowongan') ?>";
 						}
 					}
 				});
@@ -279,19 +304,23 @@
 	}
 	function adddata() {
 		const id = $("#id2").val();
-		const nama = $("#nama2").val();
-		const tgl = $("#tgl2").val();
-		const alamat = $("#alamat2").val();
-		if (nama === ''|| alamat === '' || tgl === '') {
+		const id_rekan = $("#id_rekan2").val();
+		const posisi = $("#posisi2").val();
+		const kuota = $("#kuota2").val();
+		const tgl_awal = $("#tgl_awal2").val();
+		const tgl_akhir = $("#tgl_akhir2").val();
+		if (posisi === ''|| kuota === '' || tgl_awal === ''|| tgl_akhir === '') {
 			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
 		let formData = new FormData();
 		formData.append('id', id);
-		formData.append('nama', nama);
-		formData.append('tgl_kerja_sama', tgl);
-		formData.append('alamat', alamat);
+		formData.append('id_rekan', id_rekan);
+		formData.append('posisi', posisi);
+		formData.append('kuota', kuota);
+		formData.append('tgl_awal', tgl_awal);
+		formData.append('tgl_akhir', tgl_akhir);
 		$.ajax({
-			url: "<?= url_to('addrelasi') ?>",
+			url: "<?= url_to('addlowongan') ?>",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -311,7 +340,7 @@
 				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
-							location.href = "<?= site_url('admin/perusahaan') ?>";
+							location.href = "<?= site_url('admin/lowongan') ?>";
 						}
 					}
 				});
@@ -323,8 +352,8 @@
 	}
 	function deleted(id) {
         Swal.fire({
-            title: "Delete Data Rekan Kerja" ,
-            text: "Anda yakin menghapus data rekan kerja ini!",
+            title: "Delete Lowongan" ,
+            text: "Anda yakin menghapus lowongan ini!",
             icon: "info",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -334,7 +363,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "<?= url_to('deleterelasi') ?>",
+                    url: "<?= url_to('deletelowongan') ?>",
                     type: "POST",
 					data:{
 						id : id

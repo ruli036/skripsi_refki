@@ -34,7 +34,7 @@
 			<div class="card">
 				<div class="row">
 					<div class="col-md-6">
-						<h4>PERUSAHAAN</h4>
+						<h4>JADWAL TES</h4>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group mb-0 me-0">
@@ -60,7 +60,7 @@
 							<img class="img-40 img-fluid m-r-20" src="<?= base_url('nubis/images/logo.png') ?>" alt="">
 							<div class="media-body">
 								<h6 class="f-w-600">
-									<a href="#">Data Relasi Perusahaan </a>
+									<a href="#">Jadwal Tes Lowongan Pekerjaan </a>
 									<span class="pull-right">
 
 									</span>
@@ -72,32 +72,40 @@
 											<tr class="border-bottom-primary">
 												<th scope="col">No</th>
 												<th scope="col">Nama</th>
-												<th scope="col">Tanggal Kerjasama </th>
-												<th scope="col">Alamat</th>
+												<th scope="col">Perusahaan</th>
+												<th scope="col">Posisi </th>
+												<th scope="col" width='15%'>Lokasi </th>
+												<th scope="col">Waktu</th>
 												<th scope="col">Status</th>
 												<th scope="col">Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
-												<?php
 
-												foreach ($perusahaan as $key => $value) : ?>
-													<tr class="border-bottom-secondary">
-														<th scope="row"><?= ++$key ?></th>
-														<td><?= $value->nama ?></td>
-														<td><?= $value->tgl_kerja_sama ?></td>
-														<td><?= $value->alamat ?></td>
-														<td><?= $value->stts == 'A'?'AKTIF':'NON AKTIF' ?></td>
-														<td>
-															<button type="button" class="btn btn-primary btn-sm" onclick="openModal('<?= $value->id ?>','<?= $value->nama ?>','<?= $value->tgl_kerja_sama ?>','<?= $value->alamat ?>','<?= $value->stts ?>')">
-																Edit
-															</button>
-															<button type="button" class="btn btn-danger btn-sm" onclick="deleted('<?= $value->id ?>')">
-																Delete
-															</button>
-														</td>
-													</tr>
-												<?php endforeach; ?>
+											<?php
+
+											foreach ($jadwaltes as $key => $value) : ?>
+												<tr class="border-bottom-secondary">
+													<th scope="row"><?= ++$key ?></th>
+													<td><?= $value->nama ?> <br>
+														<?= $value->no_hp ?>
+													</td>
+													<td><?= $value->perusahaan ?></td>
+													<td><?= $value->posisi ?></td>
+													<td><?= $value->lokasi ?></td>
+													<td><?= $value->waktu ?></td>
+													<td><?= $value->stts == 'P' ? 'Mendaftar' : ($value->stts == 'W' ? 'Wawancara' : ($value->stts == 'L' ? 'Lulus' : 'Tidak Lulus')) ?></td>
+													<td>
+														<button type="button" class="btn btn-primary btn-sm" onclick="openModal('<?= $value->id ?>','<?= $value->id_lowongan ?>','<?= $value->id_siswa ?>','<?= $value->waktu ?>','<?= $value->stts ?>')">
+															Edit
+														</button>
+														<button type="button" class="btn btn-danger btn-sm" onclick="deleted('<?= $value->id ?>')">
+															Delete
+														</button>
+													</td>
+												</tr>
+											<?php endforeach; ?>
+
 										</tbody>
 
 									</table>
@@ -114,38 +122,47 @@
 	</div>
 </div>
 <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" required placeholder="Nama Perusahaan" id="nama">
+			<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label">Lowongan</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="id_lowongan">
+							<?php foreach ($lowongan as $rk) : ?>
+								<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
+							<?php endforeach; ?>
+						</select>
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Tanggal Kerja Sama</label>
-					<div class="col-sm-9">
-						<input type="date" class="form-control" required placeholder="Tanggal" id="tgl">
+					<label class="col-sm-2 col-form-label">Mahasiswa</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="id_siswa">
+							<?php foreach ($siswa as $rk) : ?>
+								<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
+							<?php endforeach; ?>
+						</select>
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Alamat</label>
-					<div class="col-sm-9">
-						<textarea name="" id="alamat" class="form-control"></textarea>
-						<!-- <input type="text" class="form-control" required placeholder="Alamat" id="alamat"> -->
+					<label class="col-sm-2 col-form-label">Jadwal Tes</label>
+					<div class="col-sm-10">
+						<input type="datetime-local" class="form-control" required placeholder="Jadwal Tes" id="waktu">
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-                    <label class="col-sm-3 col-form-label">Status</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
                         <select class="form-control" id="stts">
-                                <option value="A"> AKTIF</option>
-                                <option value="N"> NON AKTIF</option>
+                                <option value="P"> Mendaftar</option>
+                                <option value="W"> Wawancara</option>
+                                <option value="L">Lulus/Diterima</option>
+                                <option value="TL"> Tidak Lulus</option>
                         </select>
                     </div>
                 </div>
@@ -160,7 +177,7 @@
 	</div>
 </div>
 <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5" id="exampleModalLabel">Add Data</h1>
@@ -168,21 +185,29 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Nama Perusahaan</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" required placeholder="Nama Perusahaan" id="nama2">
+					<label class="col-sm-2 col-form-label">Lowongan</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="id_lowongan2">
+							<?php foreach ($lowongan as $rk) : ?>
+								<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
+							<?php endforeach; ?>
+						</select>
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Tanggal Kerja Sama</label>
-					<div class="col-sm-9">
-						<input type="date" class="form-control" required placeholder="Tanggal" id="tgl2">
+					<label class="col-sm-2 col-form-label">Mahasiswa</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="id_siswa2">
+							<?php foreach ($siswa as $rk) : ?>
+								<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
+							<?php endforeach; ?>
+						</select>
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-					<label class="col-sm-3 col-form-label">Alamat</label>
-					<div class="col-sm-9">
-						<textarea name="" id="alamat2" class="form-control"></textarea>
+					<label class="col-sm-2 col-form-label">Jadwal Tes</label>
+					<div class="col-sm-10">
+						<input type="datetime-local" class="form-control" required placeholder="Jadwal Tes" id="waktu2">
 					</div>
 				</div>
 				<input type="hidden" class="form-control" disabled id="id2">
@@ -210,20 +235,23 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-        $('#tabledata').DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            pageLength: 10, // Set the default page length
-            order: [[ 3, "desc" ]] // Order by the 4th column (Age) descending
-        });
-    });
-	function openModal(id, nama, tgl, alamat,stts) {
+		$('#tabledata').DataTable({
+			paging: true,
+			searching: true,
+			ordering: true,
+			info: true,
+			pageLength: 10, // Set the default page length
+			order: [
+				[3, "desc"]
+			] // Order by the 4th column (Age) descending
+		});
+	});
+
+	function openModal(id, idlowongan,idsiswa, waktu, stts) {
 		$("#id").val(id);
-		$("#nama").val(nama);
-		$("#tgl").val(tgl);
-		$("#alamat").val(alamat);
+		$("#id_lowongan").val(idlowongan);
+		$("#id_siswa").val(idsiswa);
+		$("#waktu").val(waktu);
 		$("#stts").val(stts);
 		var myModal = new bootstrap.Modal(document.getElementById('edit'), {
 			keyboard: true
@@ -233,21 +261,21 @@
 
 	function simpan() {
 		const id = $("#id").val();
-		const nama = $("#nama").val();
-		const tgl = $("#tgl").val();
-		const alamat = $("#alamat").val();
+		const id_lowongan = $("#id_lowongan").val();
+		const id_siswa = $("#id_siswa").val();
+		const waktu = $("#waktu").val();
 		const stts = $("#stts").val();
-		if (nama === ''|| alamat === '' || tgl === '') {
+		if (waktu === '') {
 			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
 		let formData = new FormData();
 		formData.append('id', id);
-		formData.append('nama', nama);
-		formData.append('tgl_kerja_sama', tgl);
-		formData.append('alamat', alamat);
+		formData.append('id_lowongan', id_lowongan);
+		formData.append('id_siswa', id_siswa);
+		formData.append('waktu', waktu);
 		formData.append('stts', stts);
 		$.ajax({
-			url: "<?= url_to('editrelasi') ?>",
+			url: "<?= url_to('editjadwaltes') ?>",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -267,7 +295,7 @@
 				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
-							location.href = "<?= site_url('admin/perusahaan') ?>";
+							location.reload(true);
 						}
 					}
 				});
@@ -277,21 +305,22 @@
 			}
 		});
 	}
+
 	function adddata() {
 		const id = $("#id2").val();
-		const nama = $("#nama2").val();
-		const tgl = $("#tgl2").val();
-		const alamat = $("#alamat2").val();
-		if (nama === ''|| alamat === '' || tgl === '') {
+		const id_lowongan = $("#id_lowongan2").val();
+		const id_siswa = $("#id_siswa2").val();
+		const waktu = $("#waktu2").val();
+		if (waktu === '') {
 			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
 		let formData = new FormData();
 		formData.append('id', id);
-		formData.append('nama', nama);
-		formData.append('tgl_kerja_sama', tgl);
-		formData.append('alamat', alamat);
+		formData.append('id_lowongan', id_lowongan);
+		formData.append('id_siswa', id_siswa);
+		formData.append('waktu', waktu);
 		$.ajax({
-			url: "<?= url_to('addrelasi') ?>",
+			url: "<?= url_to('addjadwal') ?>",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -311,7 +340,7 @@
 				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
-							location.href = "<?= site_url('admin/perusahaan') ?>";
+							location.reload(true);
 						}
 					}
 				});
@@ -321,51 +350,52 @@
 			}
 		});
 	}
-	function deleted(id) {
-        Swal.fire({
-            title: "Delete Data Rekan Kerja" ,
-            text: "Anda yakin menghapus data rekan kerja ini!",
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "<?= url_to('deleterelasi') ?>",
-                    type: "POST",
-					data:{
-						id : id
-					},
-                    dataType: 'json',
-                    beforeSend: function () {
-                        Swal.fire({
-                            title: "Loading!",
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            didOpen: () => {
-                                Swal.showLoading()
-                            }
-                        });
-                    },
-                    success: function (data) {
-                        Swal.fire({
-                            icon: data.stts,
-                            title: data.msg
-                        }).then((result) => {
-                    /* Read more about handling dismissals below */
-                            location.reload(true);
-                        });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        Swal.fire("error");
-                    }
-                });
-            }
-        });
 
-    }
+	function deleted(id) {
+		Swal.fire({
+			title: "Delete Jadwal Tes",
+			text: "Anda yakin menghapus jadwal tes ini!",
+			icon: "info",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "OK",
+			allowOutsideClick: false,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: "<?= url_to('deletejadwaltes') ?>",
+					type: "POST",
+					data: {
+						id: id
+					},
+					dataType: 'json',
+					beforeSend: function() {
+						Swal.fire({
+							title: "Loading!",
+							allowOutsideClick: false,
+							showConfirmButton: false,
+							didOpen: () => {
+								Swal.showLoading()
+							}
+						});
+					},
+					success: function(data) {
+						Swal.fire({
+							icon: data.stts,
+							title: data.msg
+						}).then((result) => {
+							/* Read more about handling dismissals below */
+							location.reload(true);
+						});
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						Swal.fire("error");
+					}
+				});
+			}
+		});
+
+	}
 </script>
 <?= $this->endSection() ?>
