@@ -6,6 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('/lowongan', 'Home::lowongan',['as'=>'lowongan']);
+$routes->get('/jadwal', 'Home::jadwal',['as'=>'jadwal']);
 $routes->get('/dashboard', 'Home::dash', ['filter' => 'login']);
 $routes->group('admin', ['filter' => 'role:admin'], function ($routes) {
 ### route data user admin

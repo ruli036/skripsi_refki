@@ -71,9 +71,9 @@
 										<thead>
 											<tr class="border-bottom-primary">
 												<th scope="col">No</th>
+												<th scope="col">Judul</th>
 												<th scope="col">Keterangan</th>
 												<th scope="col">Dibuat</th>
-												<!-- <th scope="col">Diubah </th> -->
 												<th scope="col">Aksi</th>
 											</tr>
 										</thead>
@@ -84,9 +84,9 @@
 											foreach ($info as $key => $value) : ?>
 												<tr class="border-bottom-secondary">
 													<th scope="row"><?= ++$key ?></th>
+													<td><?= $value->judul?></td>
 													<td><?= htmlspecialchars_decode($value->desc)?></td>
 													<td><?= $value->created_at ?></td>
-													<!-- <td><?= $value->updated_at ?></td> -->
 													<td>
 														<button type="button" class="btn btn-danger btn-sm" onclick="deleted('<?= $value->id ?>')">
 															Delete
@@ -144,6 +144,12 @@
 			</div>
 			<div class="modal-body">
 				 
+				<div class="form-group row" style="padding-bottom: 15px;">
+					<label class="col-sm-2 col-form-label" for="editor1">Judul</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control" required placeholder="Judul" id="judul2">
+					</div>
+				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
 					<label class="col-sm-2 col-form-label" for="editor1">Informasi</label>
 					<div class="col-sm-10">
@@ -255,10 +261,12 @@
 
 	function adddata() {
 		var desc = CKEDITOR.instances.editor1.getData();
-		if (desc === '') {
-			return Swal.fire("INFO", "Harap mengisi semua data "+desc, 'warning');
+		const judul = $("#judul2").val();
+		if (desc === '' || judul === '') {
+			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
 		let formData = new FormData();
+		formData.append('judul', judul);
 		formData.append('desc', desc);
 		$.ajax({
 			url: "<?= url_to('addinfo') ?>",

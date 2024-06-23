@@ -45,7 +45,7 @@
         </li>
         <li class="profile-nav onhover-dropdown pe-0 py-0">
           <div class="media profile-media"><img class="b-r-10" src="<?php echo base_url('nubis/images/logo.png') ?>" width="35px" alt="">
-            <?php if($user):?>
+            <?php if(isset($user)):?>
               <div class="media-body"><span class="text-capitalize"><?= $user->username??"" ?></span>
               <p class="mb-0 font-roboto">User <i class="middle fa fa-angle-down"></i></p>
               </div>

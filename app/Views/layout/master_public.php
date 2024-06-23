@@ -47,7 +47,7 @@
         <div class="page-body-wrapper">
 
             <!-- Page Sidebar Start-->
-            <?= $this->include('layout/sidebar') ?>
+            <?= $this->include('layout/sidebar_public') ?>
             <!-- Page Sidebar Ends-->
 
             <div class="page-body">
