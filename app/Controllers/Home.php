@@ -25,7 +25,8 @@ class Home extends BaseController
     }
     public function index()
     {
-        if ($this->auth->user()) {
+        // var_dump($this->auth->user()-);
+        if ($this->auth->user() != null) {
             return redirect()->to(site_url('/dashboard'));
         } else {
             // return redirect()->to(site_url('/login'));
@@ -423,7 +424,7 @@ class Home extends BaseController
             $role = 'User';
         }
         $siswa = $this->db->query('select a.* from siswas a')->getResult();
-        $lowongan = $this->db->query('select a.*,(select nama from rekan_kerja where id = a.id_rekan) as `perusahaan` from lowongan a where tgl_awal >= "' . date('Y-m-d') . '" || tgl_akhir <= "' . date('Y-m-d') . '"')->getResult();
+        $lowongan = $this->db->query('select a.*,(select nama from rekan_kerja where id = a.id_rekan) as `perusahaan` from lowongan a ')->getResult();
 
         $jadwaltes = $this->db->query('select a.*,b.posisi,
         (select nama from siswas where id = a.id_siswa) as `nama`, 
