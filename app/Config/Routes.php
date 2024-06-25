@@ -27,6 +27,7 @@ $routes->group('admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->post('addmahasiswa', 'Home::addmahasiswa',['as'=>'addmahasiswa']);
     $routes->post('editmahasiswa', 'Home::editmahasiswa',['as'=>'editmahasiswa']);
     $routes->post('deletemahasiswa', 'Home::deletemahasiswa',['as'=>'deletemahasiswa']);
+    
 
  ### route data lowongan
     $routes->get('lowongan', 'Home::lowonganindex',['as'=>'lowongan']);
