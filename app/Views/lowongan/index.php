@@ -237,7 +237,13 @@
             searching: true,
             ordering: true,
             info: true,
-            pageLength: 10, // Set the default page length
+            pageLength: 10,
+			dom: 'Bfrtip',
+			buttons: [{
+				extend: 'excelHtml5',
+				text: 'Export to Excel',
+				className: 'btn btn-success btn-sm mb-1 text-end',
+			}], // Set the default page length
             order: [[ 3, "desc" ]] // Order by the 4th column (Age) descending
         });
     });
