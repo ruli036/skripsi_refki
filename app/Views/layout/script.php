@@ -24,7 +24,9 @@
  <!-- Datatable -->
  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
+ <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
  <!-- include script & Plugins -->
  <script src="<?= base_url() ?>cuba/assets/js/notify/bootstrap-notify.min.js"></script>
  <?= $this->renderSection('script') ?>

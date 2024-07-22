@@ -203,7 +203,8 @@ class Home extends BaseController
             ->orLike('a.no_hp', $keyword)
             ->orderBy('a.id_jurusan')
             ->groupBy('a.id')
-            ->paginate($perPage, 'siswa');
+            ->get()->getResult();
+            // ->paginate($perPage, 'siswa');
 
         $data = [
             'mahasiswa' => $mahasiswa,

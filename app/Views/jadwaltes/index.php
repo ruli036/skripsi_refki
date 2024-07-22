@@ -22,11 +22,13 @@
 	</div>
 </div>
 <?php if (session()->getFlashdata('errorid')) : ?>
-	<div class="container-fluid">
-		<div class="alert alert-secondary dark alert-dismissible fade show" role="alert"><?= session()->getFlashdata('errorid'); ?>.
-			<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
-		</div>
+<div class="container-fluid">
+	<div class="alert alert-secondary dark alert-dismissible fade show" role="alert">
+		<?= session()->getFlashdata('errorid'); ?>.
+		<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title=""
+			title=""></button>
 	</div>
+</div>
 <?php endif; ?>
 <div class="container-fluid">
 	<div class="row project-cards">
@@ -38,7 +40,8 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group mb-0 me-0">
-							<a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#add">
+							<a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+								data-bs-target="#add">
 								ADD DATA
 							</a>
 						</div>
@@ -85,25 +88,28 @@
 											<?php
 
 											foreach ($jadwaltes as $key => $value) : ?>
-												<tr class="border-bottom-secondary">
-													<th scope="row"><?= ++$key ?></th>
-													<td><?= $value->nama ?> <br>
-														<?= $value->no_hp ?>
-													</td>
-													<td><?= $value->perusahaan ?></td>
-													<td><?= $value->posisi ?></td>
-													<td><?= $value->lokasi ?></td>
-													<td><?= $value->waktu ?></td>
-													<td><?= $value->stts == 'P' ? 'Mendaftar' : ($value->stts == 'W' ? 'Wawancara' : ($value->stts == 'L' ? 'Lulus' : 'Tidak Lulus')) ?></td>
-													<td>
-														<button type="button" class="btn btn-primary btn-sm" onclick="openModal('<?= $value->id ?>','<?= $value->id_lowongan ?>','<?= $value->id_siswa ?>','<?= $value->waktu ?>','<?= $value->stts ?>')">
-															Edit
-														</button>
-														<button type="button" class="btn btn-danger btn-sm" onclick="deleted('<?= $value->id ?>')">
-															Delete
-														</button>
-													</td>
-												</tr>
+											<tr class="border-bottom-secondary">
+												<th scope="row"><?= ++$key ?></th>
+												<td><?= $value->nama ?> <br>
+													<?= $value->no_hp ?>
+												</td>
+												<td><?= $value->perusahaan ?></td>
+												<td><?= $value->posisi ?></td>
+												<td><?= $value->lokasi ?></td>
+												<td><?= $value->waktu ?></td>
+												<td><?= $value->stts == 'P' ? 'Mendaftar' : ($value->stts == 'W' ? 'Wawancara' : ($value->stts == 'L' ? 'Lulus' : 'Tidak Lulus')) ?>
+												</td>
+												<td>
+													<button type="button" class="btn btn-primary btn-sm"
+														onclick="openModal('<?= $value->id ?>','<?= $value->id_lowongan ?>','<?= $value->id_siswa ?>','<?= $value->waktu ?>','<?= $value->stts ?>')">
+														Edit
+													</button>
+													<button type="button" class="btn btn-danger btn-sm"
+														onclick="deleted('<?= $value->id ?>')">
+														Delete
+													</button>
+												</td>
+											</tr>
 											<?php endforeach; ?>
 
 										</tbody>
@@ -129,12 +135,12 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-			<div class="form-group row" style="padding-bottom: 15px;">
+				<div class="form-group row" style="padding-bottom: 15px;">
 					<label class="col-sm-2 col-form-label">Lowongan</label>
 					<div class="col-sm-10">
 						<select class="form-control" id="id_lowongan">
 							<?php foreach ($lowongan as $rk) : ?>
-								<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
+							<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -144,7 +150,7 @@
 					<div class="col-sm-10">
 						<select class="form-control" id="id_siswa">
 							<?php foreach ($siswa as $rk) : ?>
-								<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
+							<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -156,16 +162,16 @@
 					</div>
 				</div>
 				<div class="form-group row" style="padding-bottom: 15px;">
-                    <label class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="stts">
-                                <option value="P"> Mendaftar</option>
-                                <option value="W"> Wawancara</option>
-                                <option value="L">Lulus/Diterima</option>
-                                <option value="TL"> Tidak Lulus</option>
-                        </select>
-                    </div>
-                </div>
+					<label class="col-sm-2 col-form-label">Status</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="stts">
+							<option value="P"> Mendaftar</option>
+							<option value="W"> Wawancara</option>
+							<option value="L">Lulus/Diterima</option>
+							<option value="TL"> Tidak Lulus</option>
+						</select>
+					</div>
+				</div>
 				<input type="hidden" class="form-control" disabled id="id">
 
 			</div>
@@ -189,7 +195,7 @@
 					<div class="col-sm-10">
 						<select class="form-control" id="id_lowongan2">
 							<?php foreach ($lowongan as $rk) : ?>
-								<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
+							<option value="<?= $rk->id ?>"> <?= $rk->posisi ?> (<?= $rk->perusahaan ?>)</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -199,7 +205,7 @@
 					<div class="col-sm-10">
 						<select class="form-control" id="id_siswa2">
 							<?php foreach ($siswa as $rk) : ?>
-								<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
+							<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -234,20 +240,26 @@
 <script src="<?= base_url('assets/js/upload.js') ?>"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function () {
 		$('#tabledata').DataTable({
 			paging: true,
 			searching: true,
 			ordering: true,
 			info: true,
-			pageLength: 10, // Set the default page length
+			pageLength: 10,
+			dom: 'Bfrtip',
+			buttons: [{
+				extend: 'excelHtml5',
+				text: 'Export to Excel',
+				className: 'btn btn-success btn-sm mb-1 text-end',
+			}],
 			order: [
 				[3, "desc"]
-			] // Order by the 4th column (Age) descending
+			]
 		});
 	});
 
-	function openModal(id, idlowongan,idsiswa, waktu, stts) {
+	function openModal(id, idlowongan, idsiswa, waktu, stts) {
 		$("#id").val(id);
 		$("#id_lowongan").val(idlowongan);
 		$("#id_siswa").val(idsiswa);
@@ -281,7 +293,7 @@
 			contentType: false,
 			processData: false,
 			dataType: "json",
-			beforeSend: function() {
+			beforeSend: function () {
 				Swal.fire({
 					title: "Loading!",
 					allowOutsideClick: false,
@@ -290,9 +302,9 @@
 					}
 				});
 			},
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
+				Swal.fire(data.title, data.msg, data.icon).then(function (result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
 							location.reload(true);
@@ -300,7 +312,7 @@
 					}
 				});
 			},
-			error: function(jqXHR, textStatus, errorThrown) {
+			error: function (jqXHR, textStatus, errorThrown) {
 				Swal.fire("Response", "Cek kembali inputan anda ", "warning");
 			}
 		});
@@ -326,7 +338,7 @@
 			contentType: false,
 			processData: false,
 			dataType: "json",
-			beforeSend: function() {
+			beforeSend: function () {
 				Swal.fire({
 					title: "Loading!",
 					allowOutsideClick: false,
@@ -335,9 +347,9 @@
 					}
 				});
 			},
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				Swal.fire(data.title, data.msg, data.icon).then(function(result) {
+				Swal.fire(data.title, data.msg, data.icon).then(function (result) {
 					if (result.isConfirmed) {
 						if (data.stts) {
 							location.reload(true);
@@ -345,7 +357,7 @@
 					}
 				});
 			},
-			error: function(jqXHR, textStatus, errorThrown) {
+			error: function (jqXHR, textStatus, errorThrown) {
 				Swal.fire("Response", "Cek kembali inputan anda ", "warning");
 			}
 		});
@@ -370,7 +382,7 @@
 						id: id
 					},
 					dataType: 'json',
-					beforeSend: function() {
+					beforeSend: function () {
 						Swal.fire({
 							title: "Loading!",
 							allowOutsideClick: false,
@@ -380,7 +392,7 @@
 							}
 						});
 					},
-					success: function(data) {
+					success: function (data) {
 						Swal.fire({
 							icon: data.stts,
 							title: data.msg
@@ -389,7 +401,7 @@
 							location.reload(true);
 						});
 					},
-					error: function(jqXHR, textStatus, errorThrown) {
+					error: function (jqXHR, textStatus, errorThrown) {
 						Swal.fire("error");
 					}
 				});
