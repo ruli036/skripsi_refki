@@ -5,15 +5,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description"
+        content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="<?= base_url('nubis/images/logo.png') ?>" type="image/x-icon">
     <link rel="shortcut icon" href="<?= base_url('nubis/images/logo.png') ?>" type="image/x-icon">
     <title><?=env('TITLE','Default Title')?></title>
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
+        rel="stylesheet">
 
     <link rel="preload" as="style" href="https://aicom.usk.ac.id/build/assets/app-31ac1ac1.css" />
     <link rel="stylesheet" href="https://aicom.usk.ac.id/build/assets/app-31ac1ac1.css" />
@@ -34,18 +38,22 @@
                     </div> -->
                         <div class="login-main">
                             <form method="POST" class="theme-form" action="<?= url_to('login') ?>">
-                                <h4>Sign in to account</h4>
+                                <div class="d-flex justify-content-center align-item-center">
+                                    <img src="<?= base_url('nubis/images/logo.png') ?>" alt="" width="50%"> 
+                                </div>
                                 <p>Enter your username & password to login</p>
                                 <?php if (session()->getFlashdata('msg')) : ?>
-                                    <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
+                                <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
                                 <?php endif; ?>
                                 <div class="form-group">
                                     <label class="col-form-label">Username</label>
-                                    <input id="login" type="text" class="form-control " name="login" value="" required autocomplete="email" autofocus>
+                                    <input id="login" type="text" class="form-control " name="login" value="" required
+                                        autocomplete="email" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
-                                    <input id="password" type="password" class="form-control " name="password" required autocomplete="current-password" placeholder="*********">
+                                    <input id="password" type="password" class="form-control " name="password" required
+                                        autocomplete="current-password" placeholder="*********">
                                     <div class="show-hide"><span class="show"> </span></div>
                                 </div>
                                 <div class="form-group mb-0">
