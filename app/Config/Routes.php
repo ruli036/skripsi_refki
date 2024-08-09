@@ -8,6 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('/lowongan', 'Home::lowongan',['as'=>'lowonganpublic']);
 $routes->get('/jadwal', 'Home::jadwal',['as'=>'jadwal']);
+$routes->get('/datamahasiswa', 'Home::datamahasiswa',['as'=>'datamahasiswa']);
+$routes->post('/ajukanlamaran', 'Home::ajukanlamaran',['as'=>'ajukanlamaran']);
 $routes->get('/dashboard', 'Home::dash', ['filter' => 'login']);
 $routes->group('admin', ['filter' => 'role:admin'], function ($routes) {
 ### route data user admin

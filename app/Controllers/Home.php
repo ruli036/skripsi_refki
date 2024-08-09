@@ -196,7 +196,12 @@ class Home extends BaseController
         $jurusan = $this->db->query('select * from master_jurusan')->getResult();
         $perPage = 10; // Jumlah item per halaman
         $keyword = $this->request->getGet('keyword') ?? "";
-        $mahasiswa = $model->select('a.*, (select CONCAT(nama, " - ",kode) from master_jurusan where id = a.id_jurusan) AS jurusan')
+        $mahasiswa = $model->select('a.*, (select CONCAT(nama, " - ",kode) from master_jurusan where id = a.id_jurusan) AS jurusan,
+         ifnull((select id_lowongan from jadwal_seleksi where id_siswa = a.id and stts = "L" limit 0,1),0) as idlowongan,
+         ifnull((select posisi from lowongan where id = idlowongan),"Belum Bekerja") as pekerjaan, 
+         ifnull((select id_rekan from lowongan where id = idlowongan),0) as id_rekan,
+         ifnull((select nama from rekan_kerja where id = id_rekan),"Belum Bekerja") as perusahaan 
+         ')
             ->from('siswas a')
             ->like('a.nama', $keyword)
             ->orLike('a.nim', $keyword)
@@ -216,6 +221,34 @@ class Home extends BaseController
         ];
         // var_dump($mahasiswa);
         return view('mahasiswa/index', $data);
+    }
+    public function datamahasiswa()
+    {
+
+        $user = $this->auth->user();
+        $model = new MahasiswaModel();
+        
+        $jurusan = $this->db->query('select * from master_jurusan')->getResult();
+        $mahasiswa = $model->select('a.*, (select CONCAT(nama, " - ",kode) from master_jurusan where id = a.id_jurusan) AS jurusan,
+         ifnull((select id_lowongan from jadwal_seleksi where id_siswa = a.id and stts = "L" limit 0,1),0) as idlowongan,
+         ifnull((select posisi from lowongan where id = idlowongan),"Belum Bekerja") as pekerjaan, 
+         ifnull((select id_rekan from lowongan where id = idlowongan),0) as id_rekan,
+         ifnull((select nama from rekan_kerja where id = id_rekan),"Belum Bekerja") as perusahaan 
+         ')
+            ->from('siswas a')
+            ->orderBy('pekerjaan','desc')
+            ->orderBy('a.id_jurusan')
+            ->groupBy('a.id')
+            ->get()->getResult();
+
+        $data = [
+            'mahasiswa' => $mahasiswa,
+            'jurusan' => $jurusan,
+            'user' => $user,
+            'pager' => $model->pager,
+        ];
+        // var_dump($mahasiswa);
+        return view('publicpage/mahasiswa', $data);
     }
     public function perusahaanindex()
     {
@@ -243,6 +276,55 @@ class Home extends BaseController
             $this->db->table('siswas')->insert($data);
 
             $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
+        } catch (\Throwable $th) {
+            // error
+            throw new \Exception($th->getMessage());
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+    public function ajukanlamaran()
+    {
+        try {
+            $nim = $this->request->getPost('nim');
+            $id_lowongan = $this->request->getPost('id_lowongan');
+            $file = $this->request->getFile('file');
+            $siswa = $this->db->table('siswas')->where('nim',$nim)->get()->getRow();
+            if($siswa){
+                $cek = $this->db->table('jadwal_seleksi')->where('id_siswa',$siswa->id)->where('id_lowongan',$id_lowongan)->get()->getRow();
+                if(!$cek){
+                    if ($file && $file->isValid()) {
+                        $extension = $file->getClientExtension();
+                        $mimeType = $file->getMimeType();
+                        $folder = $siswa->id;
+                        $folderPath = 'assets/files/' . $folder . '/';
+                        $filename = uniqid() . '.' . $extension;
+
+                        if ($file->move($folderPath, $filename)) {
+                            $data = [
+                                'id_siswa' => $siswa->id,
+                                'id_lowongan' => $id_lowongan,
+                                'stts' => 'P',
+                                'file_cv' => $folderPath.''.$filename,
+                            ];
+                            $this->db->table('jadwal_seleksi')->insert($data);
+                            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Mengirim Lamaran!", "icon" => "success"];
+                        }else{
+                            $arr = ['stts' => false, "title" => "Gagal", "msg" => "Gagal Menguploud File!", "icon" => "danger"];
+                        }
+                    }
+                   
+                }else{
+                    $arr = ['stts' => false, "title" => "Gagal", "msg" => "Anda Sudah Melamar Di Lowongan Ini!", "icon" => "warning"];
+                }
+
+            }else{
+                $arr = ['stts' => false, "title" => "Gagal", "msg" => "Nomor Induk Mahasiswa Tidak Ditemukan!", "icon" => "danger"];
+
+            }
+            // $this->db->table('siswas')->insert($data);
+
         } catch (\Throwable $th) {
             // error
             throw new \Exception($th->getMessage());
@@ -367,7 +449,7 @@ class Home extends BaseController
     {
         try {
             $data = $this->request->getPost();
-
+            
             $this->db->table('lowongan')->insert($data);
 
             $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
@@ -450,10 +532,14 @@ class Home extends BaseController
     {
         try {
             $data = $this->request->getPost();
+            $idsiswa = $this->request->getPost('id_siswa');
+            $cek =  $this->db->table('jadwal_seleksi')->where('id_siswa',$idsiswa)->where('stts','L')->get()->getRow();
+            if(!$cek){
+                $this->db->table('jadwal_seleksi')->insert($data);
+                $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
+            }
+            $arr = ['stts' => false, "title" => "Gagal", "msg" => "Siswa sudah memilki pekerjaan", "icon" => "warning"];
 
-            $this->db->table('jadwal_seleksi')->insert($data);
-
-            $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Menambah Data!", "icon" => "success"];
         } catch (\Throwable $th) {
             // error
             throw new \Exception($th->getMessage());
@@ -483,8 +569,18 @@ class Home extends BaseController
         try {
             $data = $this->request->getPost();
             $id = $this->request->getPost('id');
+            $id_siswa = $this->request->getPost('id_siswa');
+            $file = $this->request->getFile('file');
             unset($data['id']);
-
+            unset($data['file']);
+            if ($file && $file->isValid()) {
+                $extension = $file->getClientExtension();
+                $folder = $id_siswa;
+                $folderPath = 'assets/files/' . $folder . '/';
+                $filename = uniqid() . '.' . $extension;
+                $data['file_cv'] = $folderPath.''.$filename;
+                $file->move($folderPath, $filename);
+            }
             $this->db->table('jadwal_seleksi')->update($data, ['id' => $id]);
 
             $arr = ['stts' => true, "title" => "Berhasil", "msg" => "Berhasil Mengubah Data!", "icon" => "success"];

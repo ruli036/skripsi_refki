@@ -23,7 +23,16 @@
               </svg><span>Informasi</span>
             </a>
           </li>
-
+          <li class="sidebar-list">
+            <a class="sidebar-link sidebar-title" href="<?= url_to('datamahasiswa') ?>">
+              <svg class="stroke-icon">
+                <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Mahasiswa</span>
+            </a>
+          </li>
           <li class="sidebar-list">
             <a class="sidebar-link sidebar-title" href="<?= url_to('lowonganpublic') ?>">
               <svg class="stroke-icon">
@@ -44,6 +53,7 @@
               </svg><span>Jadwal Tes Pendaftar</span>
             </a>
           </li>
+          
           <?php if(service('authentication')->check()):?>
             <li class="sidebar-list">
             <a class="sidebar-link sidebar-title" href="<?= url_to('dashboard') ?>">

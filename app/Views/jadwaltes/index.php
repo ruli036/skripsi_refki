@@ -40,10 +40,10 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group mb-0 me-0">
-							<a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+							<!-- <a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
 								data-bs-target="#add">
 								ADD DATA
-							</a>
+							</a> -->
 						</div>
 
 					</div>
@@ -79,6 +79,7 @@
 												<th scope="col">Posisi </th>
 												<th scope="col" width='15%'>Lokasi </th>
 												<th scope="col">Waktu</th>
+												<th scope="col" class="text-center">CV</th>
 												<th scope="col">Status</th>
 												<th scope="col">Aksi</th>
 											</tr>
@@ -96,7 +97,18 @@
 												<td><?= $value->perusahaan ?></td>
 												<td><?= $value->posisi ?></td>
 												<td><?= $value->lokasi ?></td>
-												<td><?= $value->waktu ?></td>
+												<td><?= $value->waktu??"Belum Ditentukan" ?></td>
+												<td>
+													<?php if($value->file_cv):?>
+														<a type="button" class="btn btn-info btn-sm" target="_blank"
+															data-toggle="modal" href="<?=base_url($value->file_cv??'')?>" download>
+															Download File 
+														</a>
+													<?php else:?>
+														File Belum Diuploud
+													<?php endif;?>
+												
+												</td>
 												<td><?= $value->stts == 'P' ? 'Mendaftar' : ($value->stts == 'W' ? 'Wawancara' : ($value->stts == 'L' ? 'Lulus' : 'Tidak Lulus')) ?>
 												</td>
 												<td>
@@ -148,7 +160,7 @@
 				<div class="form-group row" style="padding-bottom: 15px;">
 					<label class="col-sm-2 col-form-label">Mahasiswa</label>
 					<div class="col-sm-10">
-						<select class="form-control" id="id_siswa">
+						<select class="form-control" id="id_siswa" disabled>
 							<?php foreach ($siswa as $rk) : ?>
 							<option value="<?= $rk->id ?>"> <?= $rk->nama ?> (<?= $rk->nim ?>)</option>
 							<?php endforeach; ?>
@@ -172,6 +184,12 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-2 col-form-label">CV*</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" required placeholder="CV" id="file_cv">
+                    </div>
+                </div>
 				<input type="hidden" class="form-control" disabled id="id">
 
 			</div>
@@ -277,6 +295,7 @@
 		const id_siswa = $("#id_siswa").val();
 		const waktu = $("#waktu").val();
 		const stts = $("#stts").val();
+		const file = $("#file_cv")[0].files[0];
 		if (waktu === '') {
 			return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
 		}
@@ -286,6 +305,7 @@
 		formData.append('id_siswa', id_siswa);
 		formData.append('waktu', waktu);
 		formData.append('stts', stts);
+		formData.append('file', file);
 		$.ajax({
 			url: "<?= url_to('editjadwaltes') ?>",
 			type: "POST",

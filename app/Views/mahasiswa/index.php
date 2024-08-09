@@ -79,6 +79,8 @@
                                                 <th scope="col">Agama</th>
                                                 <th scope="col">No Hp</th>
                                                 <th scope="col">IPK</th>
+                                                <th scope="col">Tempat Kerja</th>
+                                                <th scope="col">Posisi Kerja</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
@@ -105,6 +107,8 @@
                                                 <td><?= $value->agama ?></td>
                                                 <td><?= $value->no_hp ?></td>
                                                 <td><?= $value->ipk ?></td>
+                                                <td><?= $value->perusahaan ?></td>
+                                                <td><?= $value->pekerjaan ?></td>
                                                 <td class="row col-md-8">
                                                     <div class="col-md-6">
                                                         <button type="button" class="btn btn-primary btn-sm"
@@ -118,8 +122,6 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                     </div>
-
-                                                   
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>

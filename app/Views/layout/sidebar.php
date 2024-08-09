@@ -66,11 +66,11 @@
               <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title" href="<?=url_to('jadwaltes')?>">
                   <svg class="stroke-icon">
-                    <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#clock"></use>
+                    <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#stroke-file"></use>
                   </svg>
                   <svg class="fill-icon">
-                    <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#fill-social"></use>
-                  </svg><span>Jadwal Tes</span>
+                    <use href="<?= base_url() ?>cuba/assets/svg/icon-sprite.svg#fill-file"></use>
+                  </svg><span>Lamaran Kerja</span>
                 </a>
               </li>
               <li class="sidebar-list">

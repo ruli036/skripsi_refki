@@ -43,6 +43,7 @@
                                     <th scope="col">Kuota</th>
                                     <th scope="col">Pendaftar</th>
                                     <th scope="col">Batas Pendaftaran</th>
+                                    <th scope="col" class="text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,13 @@
                                         <td><?= $value->kuota ?></td>
                                         <td><?= $value->pendaftar ?></td>
                                         <td><?= $value->tgl_awal ?> Sampai <?= $value->tgl_akhir ?></td>
+                                        <td class="row col-md-12">
+                                            <div class="col-md-12">
+                                                <a type="button" class="btn btn-primary btn-sm" href="#" onclick="openModal('<?= $value->id ?>')">
+                                                    <i class="fas fa-send"></i> Lamar
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -70,7 +78,36 @@
     </div>
 </div>
 
-
+<div class="modal fade " id="lamar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Kirim Lamaran Anda</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-3 col-form-label">No NIM*</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" required placeholder="NIM" id="nim">
+                        <input type="hidden" class="form-control" required placeholder="NIM" id="id_lowongan">
+                    </div>
+                </div>
+                <div class="form-group row" style="padding-bottom: 15px;">
+                    <label class="col-sm-3 col-form-label">CV Anda*</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="form-control" required placeholder="CV" id="file_cv">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="simpan()">Ajukan Lamaran</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <?= $this->endSection() ?>
@@ -98,5 +135,55 @@
             ] // Order by the 4th column (Age) descending
         });
     });
+    function openModal(id_lowongan) {
+        $("#id_lowongan").val(id_lowongan);
+        var myModal = new bootstrap.Modal(document.getElementById('lamar'), {
+            keyboard: true
+        });
+        myModal.show();
+    }
+
+    function simpan() {
+        const nim = $("#nim").val();
+        const file = $("#file_cv")[0].files[0];
+        const idlowongan = $("#id_lowongan").val();
+        if (nim === '' || file === undefined) {
+            return Swal.fire("INFO", "Harap mengisi semua data ", 'warning');
+        }
+        let formData = new FormData();
+        formData.append('nim', nim);
+        formData.append('file', file);
+        formData.append('id_lowongan', idlowongan);
+        $.ajax({
+            url: "<?= url_to('ajukanlamaran') ?>",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function () {
+                Swal.fire({
+                    title: "Loading!",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                });
+            },
+            success: function (data) {
+                console.log(data);
+                Swal.fire(data.title, data.msg, data.icon).then(function (result) {
+                    if (result.isConfirmed) {
+                        if (data.stts) {
+                            location.href = "<?= site_url('jadwal') ?>";
+                        }
+                    }
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Swal.fire("Response", "Cek kembali inputan anda ", "warning");
+            }
+        });
+    }
 </script>
 <?= $this->endSection() ?>

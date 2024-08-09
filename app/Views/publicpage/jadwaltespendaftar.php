@@ -58,7 +58,7 @@
                                         <td><?= $value->perusahaan ?></td>
                                         <td><?= $value->posisi ?></td>
                                         <td><?= $value->lokasi ?></td>
-                                        <td><?= $value->waktu ?></td>
+                                        <td><?= $value->waktu??'Belum ditentukan ' ?></td>
                                         <td><?= $value->stts == 'P' ? 'Mendaftar' : ($value->stts == 'W' ? 'Wawancara' : ($value->stts == 'L' ? 'Lulus' : 'Tidak Lulus')) ?></td>
                                         
                                     </tr>
